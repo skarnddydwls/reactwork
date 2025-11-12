@@ -1,0 +1,17 @@
+.App {
+  text-align: center;
+}
+
+.main-gb {
+  height: 500px;
+  background-image: url('../public/img/dog.jpg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
