@@ -17,7 +17,7 @@ const Editor = ({onCreate}) => {
                 }
                 onCreate(value);
                 setValue('');
-            }}>추 가</button>
+            }}>추가</button>
         </div>
     )
 }

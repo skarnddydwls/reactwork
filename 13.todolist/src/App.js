@@ -5,11 +5,14 @@ import Header from './component/Header';
 import List from './component/List';
 
 const tmpData = [
-  {id: 4, isDone: false, content: '집 가기', date: '25/11/11'}, 
-  {id: 3, isDone: false, content: '지하철 타기', date: '25/11/11'}, 
-  {id: 2, isDone: false, content: '버스 타기', date: '25/11/11'}, 
-  {id: 1, isDone: false, content: '양치 하기', date: '25/11/11'}, 
+  {id: 4, isDone: false, content: '집 가기', date: new Date().toLocaleDateString()}, 
+  {id: 3, isDone: false, content: '지하철 타기', date: new Date().toLocaleDateString()}, 
+  {id: 2, isDone: false, content: '버스 타기', date: new Date().toLocaleDateString()}, 
+  {id: 1, isDone: false, content: '양치 하기', date: new Date().toLocaleDateString()}, 
 ]
+
+// 체크박스가 체크가 되게 하기
+// isDone값이 true가 되어야 함
 
 function App() {
   const [todos, setTodos] = useState(tmpData);
@@ -26,17 +29,36 @@ function App() {
       id: idRef.current++, 
       isDone: false, 
       content: content, 
-      date: '25/11/11'
+      date: new Date().toLocaleDateString()
     } 
 
     setTodos([newItem, ...todos]);
+  }
+
+  const onUpdate = (targetId) => {
+    setTodos(todos.map( todo => {
+      if(todo.id === targetId) {
+        return {
+          ...todo,
+          isDone: !todo.isDone
+        }
+      }
+      return todo
+    }))
+
+    // setTodos(todos.map(todo => todo.id === targetId ? {... todo, isDone: !todo.isDone}: todo)) 
+  }
+
+  const onDelete = targetId => {
+    const is = window.confirm("진짜 삭제할거야??");
+    if(is) setTodos(todos.filter(todo => todo.id != targetId))
   }
 
   return (
     <div className="App">
       <Header/>
       <Editor onCreate={onCreate}/>
-      <List todos={todos}/>
+      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete}/>
     </div>
   );
 }
