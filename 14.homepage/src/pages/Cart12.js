@@ -11,7 +11,7 @@ function Cart() {
     return (
         <div className='cart'>
             <br/>
-            <h2>CART LIST</h2>
+            <h2>{result.user.name}의 CART LIST</h2>
             <br/>
 
             <Table striped bordered hover>
@@ -25,11 +25,12 @@ function Cart() {
                 </thead>
                 <tbody>
                     {
-                        result.cart.map(c =>
+                        result.cart.map((c, i) =>
                             <tr>
                                 <td>{c.id}</td>
                                 <td>{c.name}</td>
                                 <td>{c.count}</td>
+                                {/* <td><Button variant="info" onClick={() => {dispatch(countIncrease(i))}}>+</Button></td> //배열 번호를 넘겨줌*/}
                                 <td><Button variant="info" onClick={() => {dispatch(countIncrease(c.id))}}>+</Button></td>
                             </tr>
                         )
