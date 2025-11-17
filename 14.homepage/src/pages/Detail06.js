@@ -19,19 +19,13 @@ function Detail(props) {
 
     let [tab, setTab] = useState(0);
 
-    const [fade2, setFade2] = useState('start');
-
-    useEffect(() => {
-        setFade2(' end');
-    }, [])
-
     return (
-        <div className={fade2}>
+        <div className="detail">
             {
                 alert == true ? <div>2초이내 구매시 할인</div> : null
             }
             <Container>
-                <Row className='gap'>
+                <Row>
                     <Col>
                         <img src={`${process.env.PUBLIC_URL}/img/clothes${findId.id}.png`} width="80%"/>
                     </Col>
@@ -55,27 +49,37 @@ function Detail(props) {
                     <Nav.Link onClick={()=>{setTab(2)}}>버튼2</Nav.Link>
                 </Nav.Item>
             </Nav>
+            {/* 
+            tab == 0 이면 <div>내용0</div> 보이기
+            tab == 1 이면 <div>내용1</div> 보이기
+            tab == 2 이면 <div>내용2</div> 보이기 
+            */}
+            {/* 삼항 연산자로 */}
+            {/* { tab == 0 ? <div>내용0</div> : tab == 1 ? <div>내용1</div> : <div>내용2</div> }   */}
+
             <TabContent tab={tab}/>
         </div>  
     )
 }
 
+/*
+// if문으로 (컴포넌트에)
 function TabContent({tab}) {
-    const [fade, setFade] = useState('');
+    if(tab == 0) {
+        return <div>내용0</div>  
+    }
+    if(tab == 1) {
+        return <div>내용1</div>  
+    }
+    if(tab == 2) {
+        return <div>내용2</div>  
+    }
+}
+*/
 
-    useEffect(() => {
-        let end = setTimeout(() => {setFade('end')}, 100);
-        return () => {
-            clearTimeout(end);
-            setFade('');
-        }
-    }, [tab])
-
-    return (
-        <div className={`start ${fade}`}>
-            { [<h1>내용0</h1>, <h1>내용1</h1>, <h1>내용2</h1>][tab] }
-        </div>
-    )
+// if문 없이 배열로
+function TabContent({tab}) {
+    return [<h1>내용0</h1>, <h1>내용1</h1>, <h1>내용2</h1>][tab];
 }
 
 export default Detail;

@@ -5,14 +5,9 @@ import pList from './data/ProductList';
 import { Route, Routes, Link, Navigate, useNavigate } from 'react-router-dom';
 import Detail from './pages/Detail';
 import axios from 'axios';
-import Cart from './pages/Cart';
-/*
-  2. Redux라는 외부 라이브러리
-     1) 설치 : npm i @reduxjs/toolkit react-redux
-     2) 공동으로 사용하는 js파일 만들기(src/store/store.js)
 
-    > Cart의 장바구니에 들어가 값들을 redex로 사용
-*/
+// ajax 사용하기
+// 설치하기 : npm install axios
 function App() {
   const [clothes, setClothes] = useState(pList);
   const [clickCount, setClickCount] = useState(2);
@@ -25,6 +20,7 @@ function App() {
           <Navbar.Brand href="#home">Fashion Shop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={()=> {navigate('/')}}>Home</Nav.Link>
+            <Nav.Link onClick={()=> {navigate('/detail')}}>Detail</Nav.Link>
             <Nav.Link onClick={()=> {navigate('/cart')}}>Cart</Nav.Link>
           </Nav>
         </Container>
@@ -48,24 +44,30 @@ function App() {
             <Button variant="success" onClick={() => {
               axios.get(`https://raw.githubusercontent.com/bliss42/myHome/refs/heads/main/react/data/data${clickCount}.json`)
                    .then(result => {
+                      // 성공 핸들링
+                      console.log(result);
+                      console.log(result.data);
                       let copy = [...clothes, ...result.data]
                       setClothes(copy)
                       setClickCount(clickCount+1);
                     })
                     .catch(() => {
+                      // 에러 핸들링
+                      console.log("axios 실패");
                       alert('더이상 상품이 없습니다');
                     });
             }}>서버에서 데이터 가져오기</Button>
           </>
         } />
         <Route path="/detail/:pid" element={<Detail clothes={clothes}/>} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<div>장바구니임</div>}/>
         <Route path="*" element={<div>없는 페이지 입니다</div>} />
       </Routes>
     </div>
   );
 }
 
+// 클릭하면 상세페이지로 이동
 function PListCol(props) {
   const navigate = useNavigate();
 
